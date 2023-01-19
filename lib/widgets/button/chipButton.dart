@@ -21,7 +21,12 @@ class _ChipButtonState extends State<ChipButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: widget.save,
+      onPressed: () {
+        setState(() {
+          widget.isSelected = !widget.isSelected;
+        });
+        widget.save();
+      },
       style: ButtonStyle(
         backgroundColor: widget.isSelected
             ? MaterialStateProperty.all(mainAppColor)
@@ -29,7 +34,7 @@ class _ChipButtonState extends State<ChipButton> {
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50.0),
-            side: BorderSide(color: mainAppColor, width: 1),
+            side: const BorderSide(color: mainAppColor, width: 1),
           ),
         ),
       ),

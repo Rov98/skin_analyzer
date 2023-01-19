@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:skin_tone_scanner/apptheme/appTheme.dart';
+import 'package:skin_tone_scanner/screens/homePage.dart';
 import 'package:skin_tone_scanner/screens/loadingPage.dart';
+import 'package:skin_tone_scanner/widgets/customAppbar.dart';
 import 'package:skin_tone_scanner/widgets/statResult.dart';
 
 class resultPage extends StatefulWidget {
@@ -50,9 +52,21 @@ class _resultPageState extends State<resultPage> {
               ),
               child: Scaffold(
                 backgroundColor: Colors.transparent,
-                appBar: AppBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
+                appBar: CustomAppbar(
+                  '',
+                  widgets: [],
+                  leading: IconButton(
+                    onPressed: () {
+                      if (mounted) {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => HomePage(),
+                            ),
+                            (route) => false);
+                      }
+                    },
+                    icon: Icon(Icons.arrow_back_ios_new_rounded),
+                  ),
                 ),
                 body: Stack(
                   children: [

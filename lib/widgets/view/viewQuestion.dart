@@ -4,7 +4,7 @@ import 'package:skin_tone_scanner/widgets/pickLocation.dart';
 import 'package:skin_tone_scanner/widgets/text/textQuestion.dart';
 import 'package:skin_tone_scanner/widgets/view/viewCondition.dart';
 
-class ViewQuestion extends StatelessWidget {
+class ViewQuestion extends StatefulWidget {
   ViewQuestion({
     super.key,
     required this.questions,
@@ -16,12 +16,21 @@ class ViewQuestion extends StatelessWidget {
   List condition;
   String questionsTitle;
   Function onPress;
+
+  @override
+  State<ViewQuestion> createState() => _ViewQuestionState();
+}
+
+class _ViewQuestionState extends State<ViewQuestion> {
+  bool _ispressed = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextQuestion(questionTitle: questionsTitle),
+        TextQuestion(questionTitle: widget.questionsTitle),
         const SizedBox(
           height: 10,
         ),
@@ -29,7 +38,7 @@ class ViewQuestion extends StatelessWidget {
           child: Wrap(
             direction: Axis.horizontal,
             children: [
-              ...questions
+              ...widget.questions
                   .map(
                     (e) => e['text'] != null
                         ? Padding(
@@ -37,8 +46,8 @@ class ViewQuestion extends StatelessWidget {
                                 vertical: 0, horizontal: 5.0),
                             child: ChipButton(
                               title: e['text'].toString(),
-                              isSelected: e['isSelected'] as bool,
-                              save: () => onPress(e['score'] as int, e['isSelected'] as bool),
+                              isSelected: _ispressed,
+                              save: () => widget.onPress(e['score'] as int),
                             ),
                           )
                         : Container(
@@ -51,7 +60,9 @@ class ViewQuestion extends StatelessWidget {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                ViewCondition(condition: condition),
+                                ViewCondition(
+                                  condition: widget.condition,
+                                ),
                               ],
                             ),
                           ),

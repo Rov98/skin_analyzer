@@ -4,7 +4,7 @@ import 'package:skin_tone_scanner/constant/constant.dart';
 import 'package:skin_tone_scanner/widgets/button/customButton.dart';
 import 'package:skin_tone_scanner/widgets/button/largeButton.dart';
 import 'package:skin_tone_scanner/widgets/etc/customProgress.dart';
-import 'package:skin_tone_scanner/widgets/etc/viewQuestion.dart';
+import 'package:skin_tone_scanner/widgets/view/viewQuestion.dart';
 import 'package:skin_tone_scanner/widgets/pickImage.dart';
 import 'package:skin_tone_scanner/widgets/view/viewImagepicker.dart';
 
@@ -16,30 +16,28 @@ class Questions extends StatefulWidget {
 }
 
 class _QuestionsState extends State<Questions> {
+  bool _isResult = false;
+  int _questionsIndex = 0;
+  int _totalScore = 0;
+
   _cameraOption() {
     showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: AppTheme().themeData.primaryColor,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          ),
-        ),
-        builder: (context) => PickImage()).whenComplete(
-      () => Navigator.of(context).pop(),
-    );
+            context: context,
+            isScrollControlled: true,
+            backgroundColor: AppTheme().themeData.primaryColor,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+            ),
+            builder: (context) => PickImage())
+        .onError((error, stackTrace) => error.toString());
   }
 
-  bool _isResult = false;
-  bool _isSelectedChipButton = false;
-  int _questionsIndex = 0;
-
-  void _buttonPress(int score, bool isSelected) {
-    setState(() {
-      isSelected = !isSelected;
-    });
+  void _buttonPress(int score) {
+    _totalScore = _totalScore + score;
+    print(_totalScore);
     print(score);
   }
 
@@ -65,8 +63,8 @@ class _QuestionsState extends State<Questions> {
         _questionsIndex = _questionsIndex - 1;
       }
     });
-    print(_questionsIndex);
-    print(_question.length);
+    // print(_questionsIndex); do it in debug only
+    // print(_question.length);
   }
 
   _toResult() {
@@ -80,45 +78,108 @@ class _QuestionsState extends State<Questions> {
       'questionsText': 'Bagaimana Kondisi Kulit Kamu?',
       'isAnswered': false,
       'answerText': [
-        {'text': 'Normal', 'score': 10, 'isSelected': false},
-        {'text': 'Kering', 'score': 10, 'isSelected': false},
-        {'text': 'Berminyak', 'score': 10, 'isSelected': false},
-        {'text': 'Sensitif', 'score': 10, 'isSelected': false},
-        {'text': 'Kombinasi', 'score': 10, 'isSelected': false},
+        {
+          'text': 'Normal',
+          'score': 80,
+        },
+        {
+          'text': 'Kering',
+          'score': 40,
+        },
+        {
+          'text': 'Berminyak',
+          'score': 60,
+        },
+        {
+          'text': 'Sensitif',
+          'score': 40,
+        },
+        {
+          'text': 'Kombinasi',
+          'score': 50,
+        },
       ]
     },
     {
       'questionsText': 'Apa Masalah Utama Kulit Mu?',
       'isAnswered': false,
       'answerText': [
-        {'text': 'Garis Halus & Kerutan', 'score': 10, 'isSelected': false},
-        {'text': 'Kulit Kusam', 'score': 10, 'isSelected': false},
-        {'text': 'Kemerahan', 'score': 10, 'isSelected': false},
-        {'text': 'Pori - Pori Besar', 'score': 10, 'isSelected': false},
-        {'text': 'Pigmentasi', 'score': 10, 'isSelected': false},
-        {'text': 'Noda Kulit', 'score': 10, 'isSelected': false},
-        {'text': 'Mata Bengkak', 'score': 10, 'isSelected': false},
-        {'text': 'Dark Spots', 'score': 10, 'isSelected': false},
+        {
+          'text': 'Garis Halus & Kerutan',
+          'score': 60,
+        },
+        {
+          'text': 'Kulit Kusam',
+          'score': 40,
+        },
+        {
+          'text': 'Kemerahan',
+          'score': 50,
+        },
+        {
+          'text': 'Pori - Pori Besar',
+          'score': 60,
+        },
+        {
+          'text': 'Pigmentasi',
+          'score': 30,
+        },
+        {
+          'text': 'Noda Kulit',
+          'score': 60,
+        },
+        {
+          'text': 'Mata Bengkak',
+          'score': 10,
+        },
+        {
+          'text': 'Dark Spots',
+          'score': 50,
+        },
       ]
     },
     {
       'questionsText': 'Berapa Umur Kamu?',
       'isAnswered': false,
       'answerText': [
-        {'text': '18-24 Tahun', 'score': 10, 'isSelected': false},
-        {'text': '25-34 Tahun', 'score': 10, 'isSelected': false},
-        {'text': '35-44 Tahun', 'score': 10, 'isSelected': false},
-        {'text': '45-55 Tahun', 'score': 10, 'isSelected': false},
-        {'text': '55+ Tahun', 'score': 10, 'isSelected': false},
+        {
+          'text': '18-24 Tahun',
+          'score': 80,
+        },
+        {
+          'text': '25-34 Tahun',
+          'score': 60,
+        },
+        {
+          'text': '35-44 Tahun',
+          'score': 40,
+        },
+        {
+          'text': '45-55 Tahun',
+          'score': 20,
+        },
+        {
+          'text': '55+ Tahun',
+          'score': 5,
+        },
       ]
     },
     {
       'questionsText': 'Dimana lokasi anda sering menghabiskan waktu?',
       'isAnswered': false,
       'condition': [
-        {'cons': 'UV Index', 'score': 15, 'isSelected': false},
-        {'cons': 'Humidity', 'score': 20, 'isSelected': false},
-        {'cons': 'Pollution', 'score': 20, 'isSelected': false},
+        {
+          'cons': 'UV Index',
+          'score': 15,
+        },
+        {
+          'cons': 'Humidity',
+          'score': 20,
+        },
+        {
+          'cons': 'Pollution',
+          'score': 20,
+        },
       ]
     },
   ];
@@ -144,48 +205,47 @@ class _QuestionsState extends State<Questions> {
           height: 50,
         ),
         Expanded(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Row(
-                    children: List<Widget>.generate(
-                      _question.length,
-                      (index) {
-                        return Expanded(
-                          child: CustomProgress(
-                              isComplete:
-                                  _question[index]['isAnswered'] as bool),
-                        );
-                      },
-                    ),
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  children: List<Widget>.generate(
+                    _question.length,
+                    (index) {
+                      return Expanded(
+                        child: CustomProgress(
+                            isComplete: _question[index]['isAnswered'] as bool),
+                      );
+                    },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  _isResult
-                      ? Expanded(child: ViewImagePicker())
-                      : Expanded(
-                          child: ViewQuestion(
-                              questions: asnwerText != null
-                                  ? asnwerText as List<Map<String, Object>>
-                                  : [
-                                      {'': ''}
-                                    ],
-                              questionsTitle: _question[_questionsIndex]
-                                      ['questionsText']
-                                  .toString(),
-                              condition: conditionText != null
-                                  ? conditionText as List
-                                  : [],
-                              onPress: _buttonPress),
-                        ),
-                ],
-              ),
-            )),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                _isResult
+                    ? const Expanded(child: ViewImagePicker())
+                    : Expanded(
+                        child: ViewQuestion(
+                            questions: asnwerText != null
+                                ? asnwerText as List<Map<String, Object>>
+                                : [
+                                    {'': ''}
+                                  ],
+                            questionsTitle: _question[_questionsIndex]
+                                    ['questionsText']
+                                .toString(),
+                            condition: conditionText != null
+                                ? conditionText as List
+                                : [],
+                            onPress: _buttonPress),
+                      ),
+              ],
+            ),
+          ),
+        ),
         _isResult
             ? Expanded(
                 flex: 0,
@@ -196,7 +256,7 @@ class _QuestionsState extends State<Questions> {
                 ),
               )
             : Expanded(
-                flex: 2,
+                flex: 0,
                 child: Container(
                   alignment: Alignment.bottomCenter,
                   child: Row(
