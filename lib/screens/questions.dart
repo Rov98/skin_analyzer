@@ -178,7 +178,7 @@ class _QuestionsState extends State<Questions> {
         },
         {
           'cons': 'Pollution',
-          'score': 20,
+          'score': 50,
         },
       ]
     },
@@ -229,18 +229,19 @@ class _QuestionsState extends State<Questions> {
                     ? const Expanded(child: ViewImagePicker())
                     : Expanded(
                         child: ViewQuestion(
-                            questions: asnwerText != null
-                                ? asnwerText as List<Map<String, Object>>
-                                : [
-                                    {'': ''}
-                                  ],
-                            questionsTitle: _question[_questionsIndex]
-                                    ['questionsText']
-                                .toString(),
-                            condition: conditionText != null
-                                ? conditionText as List
-                                : [],
-                            onPress: _buttonPress),
+                          questions: asnwerText != null
+                              ? asnwerText as List<Map<String, Object>>
+                              : [
+                                  {'': ''}
+                                ],
+                          questionsTitle: _question[_questionsIndex]
+                                  ['questionsText']
+                              .toString(),
+                          condition: conditionText != null
+                              ? conditionText as List<Map<String, Object>>
+                              : [],
+                          onPress: _buttonPress,
+                        ),
                       ),
               ],
             ),

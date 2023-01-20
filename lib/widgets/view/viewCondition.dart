@@ -1,51 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:skin_tone_scanner/widgets/button/conditionButton.dart';
 
-class ViewCondition extends StatefulWidget {
-  ViewCondition({
-    super.key,
-    required this.condition,
-  });
+class ViewCondition extends StatelessWidget {
+  ViewCondition(
+      {super.key,
+      required this.condition,
+      required this.isSelected,
+      required this.onPressed});
   List condition;
-
-  @override
-  State<ViewCondition> createState() => _ViewConditionState();
-}
-
-class _ViewConditionState extends State<ViewCondition> {
-  late List<bool> _isSelected =
-      List.generate(widget.condition.length, (index) => false);
+  bool isSelected;
+  Function onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(children: [
-      ToggleButtons(
-        isSelected: _isSelected,
-        renderBorder: false,
-        borderWidth: 5.0,
-        selectedColor: Colors.white,
-        fillColor: Colors.orange,
-        color: Colors.red,
-        onPressed: (index) {
-          setState(() {
-            _isSelected[index] = !_isSelected[index];
-          });
-          print(index);
-        },
-        children: [
-          Icon(Icons.add),
-          Icon(Icons.add_a_photo),
-          Icon(Icons.add_alarm),
-        ],
+    return Wrap(
+        children: List<Widget>.generate(
+      condition.length,
+      (index) => ConditionButton(
+        title: condition[index]['cons'].toString(),
+        score: condition[index]['score'] as int,
+        onPressed: () => onPressed(condition[index]['score'] as int),
+        isSelected: isSelected,
       ),
-    ]);
+    ));
   }
 }
-
-// List<Widget>.generate(
-//       condition.length,
-//       (index) => ConditionButton(
-//         title: condition[index]['cons'].toString(),
-//         score: condition[index]['score'] as int,
-//       ),
-//     )

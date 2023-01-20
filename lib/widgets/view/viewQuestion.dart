@@ -62,6 +62,8 @@ class _ViewQuestionState extends State<ViewQuestion> {
                                 ),
                                 ViewCondition(
                                   condition: widget.condition,
+                                  isSelected: _ispressed,
+                                  onPressed: widget.onPress,
                                 ),
                               ],
                             ),
