@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                           vertical: 20.0, horizontal: 10.0),
                       decoration: BoxDecoration(
                         color: AppTheme().themeData.primaryColor,
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(20.0),
                           topRight: Radius.circular(20.0),
                         ),
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                                 MaterialStateProperty.all(mainAppColor),
                           ),
                           onPressed: () => _showQuestion(context),
-                          icon: Icon(Icons.face_rounded),
+                          icon: const Icon(Icons.face_rounded),
                           label: const Text('Mulai Sekarang'))),
                 )
               ],

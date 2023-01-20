@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:skin_tone_scanner/apptheme/appTheme.dart';
 import 'package:skin_tone_scanner/constant/constant.dart';
+import 'package:skin_tone_scanner/screens/loadingPage.dart';
 import 'package:skin_tone_scanner/screens/resultPage.dart';
 
 class PickImage extends StatelessWidget {
@@ -29,9 +30,7 @@ class PickImage extends StatelessWidget {
             pickedImage: _ImageFile!,
           ),
         ))
-        .whenComplete(() =>
-            //pop the modal bottom sheet
-            Navigator.of(context).pop());
+        .whenComplete(() => Navigator.of(context).pop());
   }
 
   Widget _ItemOption(
